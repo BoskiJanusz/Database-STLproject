@@ -1,0 +1,14 @@
+Name: Jan
+Lastname: Kowalski
+Pesel: 75051898423
+Address: Ul. Komandorska
+Sex: Male
+Index: 8999
+
+Name: Adam
+Lastname: Adamski
+Pesel: 47061311463
+Address: Ul. 3 Maja
+Sex: Male
+Index: 666
+
