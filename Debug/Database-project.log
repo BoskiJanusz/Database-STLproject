@@ -1,7 +1,0 @@
-﻿  pch.cpp
-  Database-project.cpp
-  Database.cpp
-c:\users\boski_janusz\source\repos\database-project\database-project\database.cpp(122): warning C4566: character represented by universal-character-name '\uFFFD' cannot be represented in the current code page (1250)
-  Student.cpp
-  Generating Code...
-  Database-project.vcxproj -> C:\Users\Boski_Janusz\source\repos\Database-project\Debug\Database-project.exe

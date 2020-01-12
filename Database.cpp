@@ -1,16 +1,15 @@
-﻿#include "pch.h"
-#include "Database.hpp"
+﻿#include "Database.hpp"
 #include <algorithm>
 #include <iostream>
 #include <iterator>
 #include <string>
 #include <fstream>
+#include <boost/algorithm/string/split.hpp>
 
 void Database::addStudent(const Student &student)
 {
-    Students.push_back(student);
+    Students.emplace_back(student);
 }
-
 
 void Database::sortByIndex()
 {
@@ -35,7 +34,7 @@ void Database::sortByLastName()
 
 void Database::removeStudentByIndex(int index)
 {
-    auto iter = std::find_if(begin(Students), end(Students), [index](const auto &student) {
+    auto iter = std::find_if(begin(Students), end(Students), [&index](const auto &student) {
         return student.getIndex() == index;
     });
     if (iter != end(Students))
@@ -44,10 +43,9 @@ void Database::removeStudentByIndex(int index)
     }
 }
 
-
 void Database::removeStudentByPESEL(std::string pesel)
 {
-    auto iter = std::find_if(begin(Students), end(Students), [pesel](const auto &student) {
+    auto iter = std::find_if(begin(Students), end(Students), [&pesel](const auto &student) {
         return student.getPESEL() == pesel;
     });
     if (iter != end(Students))
@@ -60,35 +58,32 @@ void Database::displayDatabase()
 {
     int counter = 1;
     for (auto elem : Students)
-        std::cout << counter++ << ".\n" << elem.getData() << std::endl;
+        std::cout << counter++ << ".\n"
+                  << elem.getData() << std::endl;
 }
-
-
 
 void Database::findByPESEL(std::string pesel)
 {
+    auto iter = std::find_if(begin(Students), end(Students), [&pesel](const auto &student) {
+        return student.getPESEL() == pesel;
+    });
 
-    for (auto elem : Students)
+    if (iter != end(Students))
     {
-        if (elem.getPESEL() == pesel)
-        {
-            std::cout << elem.getData();
-        }
+        std::cout << iter->getData();
     }
-
 }
 
 void Database::findByLastName(std::string lastName)
 {
-
     for (auto elem : Students)
     {
         if (elem.getLastName() == lastName)
         {
             std::cout << elem.getData();
         }
+        std::cout << "\n";
     }
-
 }
 
 void Database::generateDatabase(int numberOfElements)
@@ -97,42 +92,38 @@ void Database::generateDatabase(int numberOfElements)
     while (numberOfElements != 0)
     {
         Student st;
-        Students.push_back(st);
+        Students.emplace_back(st);
         numberOfElements--;
     }
-
 }
 
 void Database::saveDatabaseInFile()
 {
     std::ofstream file("data.txt");
-    for (const auto &elem : Students) file << elem.getData() << "\n";
+    for (const auto &elem : Students)
+        file << elem.getData() << "\n";
 }
-
 
 bool Database::isPESELCorrect(std::string pesel)
 {
 
     std::vector<int> ciphers;
     for (size_t i = 0; i < pesel.size(); ++i)
-        ciphers.push_back(pesel[i] - '0');
+        ciphers.emplace_back(pesel[i] - '0');
 
     if (ciphers.size() != 11)
     {
-        std::cout << "Z�a dlugosc peselu!" << std::endl;
+        std::cout << "Zla dlugosc peselu!" << std::endl;
         return false;
     }
 
     int cipher = 0;
-    cipher += ciphers[0] * 9 + ciphers[1] * 7 + ciphers[2] * 3 + ciphers[3] * 1
-        + ciphers[4] * 9 + ciphers[5] * 7 + ciphers[6] * 3 + ciphers[7] * 1
-        + ciphers[8] * 9 + ciphers[9] * 7;
+    cipher += ciphers[0] * 9 + ciphers[1] * 7 + ciphers[2] * 3 + ciphers[3] * 1 + ciphers[4] * 9 + ciphers[5] * 7 + ciphers[6] * 3 + ciphers[7] * 1 + ciphers[8] * 9 + ciphers[9] * 7;
 
     if (cipher % 10 != ciphers[10])
     {
         std::cout << "Bledny pesel!" << std::endl;
         return false;
-
     }
     else
     {
@@ -145,14 +136,14 @@ void Database::modifyStudent(std::string PESEL)
 
     if (isPESELCorrect(PESEL) == true)
     {
-        for (auto &elem : Students)
+        auto iter = std::find_if(begin(Students), end(Students), [&PESEL](const auto &student) {
+            return student.getPESEL() == PESEL;
+        });
+        
+        if (iter != std::end(Students))
         {
-            if (elem.getPESEL() == PESEL)
-            {
-                elem.setData();
-            }
+            iter->setData();
         }
-
     }
 
     else

@@ -6,7 +6,7 @@ Sex: Male
 Index: 8999
 
 Name: Adam
-Lastname: Adamski
+Lastname: Kowalski
 Pesel: 47061311463
 Address: Ul. 3 Maja
 Sex: Male

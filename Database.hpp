@@ -3,6 +3,10 @@
 #include <vector>
 class Database
 {
+
+private:
+    std::vector<Student> Students;
+    
 public:
     void addStudent(const Student &student);
     void sortByIndex();
@@ -20,6 +24,4 @@ public:
 
 
 
-private:
-    std::vector<Student> Students;
 };

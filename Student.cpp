@@ -1,4 +1,3 @@
-#include "pch.h"
 #include "Student.hpp"
 #include <time.h>
 #include <iostream>
@@ -174,7 +173,7 @@ std::string Student::generateSex() const
     std::string Street[2] = { "Male", "Female" };
 
     std::random_device generator;
-    std::uniform_int_distribution<int> distribution(0, 1);
+    std::uniform_int_distribution<int> distribution(0, 1000);
 
-    return Street[distribution(generator)];
+    return Street[(distribution(generator)) % 2]; // odd returns 1 even returns 0
 }
