@@ -1,6 +1,7 @@
 #include "Database.hpp"
 #include "Student.hpp"
-
+#include "Person.hpp"
+#include "Employee.hpp"
 
 int main()
 {
@@ -17,24 +18,31 @@ int main()
         53120296831
         89090868938
         */
-
     Database db;
-    Student jan("Jan", "Kowalski", "75051898423", "Ul. Komandorska", "Male", 8999);
-    db.addStudent(jan);
-    Student adam("Adam", "Kowalski", "47061311463", "Ul. 3 Maja", "Male", 666);
-    db.addStudent(adam);
-    //db.saveDatabaseInFile();
-    //db.generateDatabase(10);
-    //db.sortByIndex();
-   // db.displayDatabase();
-    // db.isPESELCorrect("97011907");
-    //db.modifyStudent("75051898423");
-    // db.displayDatabase();
-    //db.findByPESEL("970229103");
-   // db.removeStudentByPESEL("1222213");
-   // db.displayDatabase();
-   // db.removeStudentByIndex(1222213);
-   //db.findByPESEL("75051898423");
- //  db.findByLastName("Kowalski");
-}
+     db.add_to_base(std::make_shared<Student>("Dominik", "Nowak", "75051898423", "Ul. Olesnicka", "Male", 237812));
+     db.add_to_base(std::make_shared<Student>("Andzelika", "Nowak", "76120851491", "Ul. Wroclawska", "Female", 2345));
+     db.add_to_base(std::make_shared<Student>("Andrzej", "Reto", "47061311463", "Ul. Michalowiska", "Male", 5744));
+     db.add_to_base(std::make_shared<Student>("Karol", "Bordo", "64102499632", "Ul. Wiesnowa", "Male", 23456));
+     db.add_to_base(std::make_shared<Employee>("Michal", "Szklany", "46110839228", "Ul. Kambodza", "Male", 100'000));
+     db.add_to_base(std::make_shared<Employee>("Michal", "Poniedzilek", "82072728882", "Ul. Jemen", "Male", 1000));
+     db.add_to_base(std::make_shared<Employee>("Stanislaw", "Sobota", "72081255275", "Ul. Polska", "Male", 1000));
+     db.add_to_base(std::make_shared<Employee>("Robert", "Nowak", "81120695565", "Ul. Nowojorska", "Male", 1000));
 
+    db.displayDatabase();
+    //db.sortByIndex();
+    //db.sortByPESEL();
+    //db.sortByLastName();
+    //db.removeStudentByIndex(23456);
+    //db.removeStudentByPESEL("46110839228");
+    //db.findByLastName("Nowak");
+    //db.findByPESEL("76120851491");
+    //db.generateDatabase(5);
+    //db.saveDatabaseInFile();
+    //db.isPESELCorrect("46110839228");
+    //db.modifyPersonByPESEL("75051898423");
+    //db.modifyEarningsByPesel("81120695565", 99);
+    
+
+
+    return 0;
+}

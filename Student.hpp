@@ -1,37 +1,34 @@
 #pragma once
+#include "Person.hpp"
 #include <string>
+#include <iostream>
 
-class Student
+
+class Student : public   Person
 {
 private:
-    std::string name;
-    std::string lastName;
-    std::string PESEL;
-    std::string address;
-    std::string sex;
+   
     int index;
 
 public:
     Student(const std::string &name,
-        const std::string &lastName,
-        const std::string &PESEL,
-        const std::string &address,
-        const std::string &sex,
-        int index);
+            const std::string &lastName,
+            const std::string &PESEL,
+            const std::string &address,
+            const std::string &sex,
+            const int& index);
+    Student(Person &p, int& index);
     Student();
     ~Student();
-    int getIndex() const;
-    std::string getPESEL() const;
-    std::string getLastName() const;
-    std::string getData() const;
-    std::string generate() const;
-    std::string generateRandomMaleName() const;
-    std::string generateRandomFemaleName() const;
-    std::string generateRandomLastName() const;
-    std::string generateSex() const;
-    std::string generateRandomPesel() const;
-    std::string generateRandomStreet() const;
-    int  generateRandomIndex() const;
+
     void setData();
+    std::string getData() const;
+
+    int getIndex() const;
+    int generateRandomIndex() const;
+
+    virtual int getEarnings() const {return 0;};
+    virtual int generateRandomEarnings() const {return 0;};
+    virtual void setEarnings(int) {};
 
 };
