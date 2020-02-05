@@ -4,7 +4,7 @@
 
 void Database::add_to_base(const std::shared_ptr<Person>&  human)
 {
-    people.emplace_back(human);
+    people.emplace_back(std::move(human));
 }
 
 void Database::displayDatabase()
