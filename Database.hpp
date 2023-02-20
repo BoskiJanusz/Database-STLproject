@@ -18,20 +18,20 @@ private:
 public:
 
     void add_to_base(const std::shared_ptr<Person>& human);
-    void displayDatabase();
+    void displayDatabase() const;
     void sortByIndex();
     void sortByPESEL();
     void sortByLastName();
     void removeStudentByIndex(int index);
     void removePersonByPESEL(std::string PESEL);
-    void findByLastName(std::string lastName);
-    void findByPESEL(std::string PESEL);
+    void findByLastName(std::string lastName) const;
+    void findByPESEL(std::string PESEL) const;
     void generateDatabase(int numberOfElements);
     void modifyPersonByPESEL(std::string PESEL);
     void modifyEarningsByPesel(std::string PESEL, int earnings);
-    bool isPESELCorrect(std::string PESEL);
+    bool isPESELCorrect(std::string PESEL) const;
     void saveDatabaseInFile();
-    void loadDataFromFile();
+    void loadDataFromFile() const;
 
 
 

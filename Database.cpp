@@ -7,7 +7,7 @@ void Database::add_to_base(const std::shared_ptr<Person>&  human)
     people.emplace_back(std::move(human));
 }
 
-void Database::displayDatabase()
+void Database::displayDatabase() const
 {
     int counter = 1;
     for (auto elem : people)
@@ -63,7 +63,7 @@ void Database::removePersonByPESEL(std::string pesel)
 }
 
 
-void Database::findByLastName(std::string lastName)
+void Database::findByLastName(std::string lastName) const
 {
     for (auto elem : people)
     {
@@ -75,7 +75,7 @@ void Database::findByLastName(std::string lastName)
     }
 }
 
-void Database::findByPESEL(std::string pesel)
+void Database::findByPESEL(std::string pesel) const
 {
     auto iter = std::find_if(begin(people), end(people), [&pesel](const auto &student) {
         return student->getPESEL() == pesel;
@@ -114,7 +114,7 @@ void Database::saveDatabaseInFile()
         file << elem->getData() << "\n";
 }
 
-bool Database::isPESELCorrect(std::string pesel)
+bool Database::isPESELCorrect(std::string pesel) const
 {
 
     std::vector<int> ciphers;
