@@ -1,7 +1,5 @@
 ﻿#include "Database.hpp"
 
-
-
 void Database::add_to_base(const std::shared_ptr<Person>&  human)
 {
     people.emplace_back(std::move(human));
@@ -9,21 +7,25 @@ void Database::add_to_base(const std::shared_ptr<Person>&  human)
 
 void Database::displayDatabase() const
 {
-    int counter = 1;
-    for (auto elem : people)
-        std::cout << counter++ << ".\n"
-                  << elem->getData() << std::endl;
+    std::cout << showContent();
 }
 
+std::string Database::showContent() const
+{
+    std::string temp = "";
+    int counter = 1;
+    for (auto elem : people)
+        temp += std::to_string(counter++) + ".\n"
+        + elem->getData() + " \n";
+    return temp;
+}
 
 void Database::sortByIndex()
 {
     std::sort(begin(people), end(people), [](const auto &lhs, const auto &rhs) {
-        return lhs->getIndex() > rhs->getIndex();
+        return lhs->getNumber() > rhs->getNumber();
     });
 }
-
-
 
 void Database::sortByPESEL()
 {
@@ -39,10 +41,10 @@ void Database::sortByLastName()
     });
 }
 
-void Database::removeStudentByIndex(int index)
+void Database::removeStudentByIndex(const int index)
 {
     auto iter = std::find_if(begin(people), end(people), [&index](const auto &student) {
-        return student->getIndex() == index;
+        return student->getNumber() == index;
     });
 
     if (iter != end(people))
@@ -51,7 +53,7 @@ void Database::removeStudentByIndex(int index)
     }
 }
 
-void Database::removePersonByPESEL(std::string pesel)
+void Database::removePersonByPESEL(const std::string pesel)
 {
     auto iter = std::find_if(begin(people), end(people), [&pesel](const auto &student) {
         return student->getPESEL() == pesel;
@@ -62,33 +64,46 @@ void Database::removePersonByPESEL(std::string pesel)
     }
 }
 
-
-void Database::findByLastName(std::string lastName) const
+std::string Database::findByLastName(const std::string lastName) const
 {
-    for (auto elem : people)
+    std::string temp = "";
+    for (auto && elem : people)
     {
         if (elem->getLastName() == lastName)
         {
-            std::cout << elem->getData();
-            std::cout << "\n";
+            temp += elem->getData() + "\n";
         }
     }
+
+    return temp;
 }
 
-void Database::findByPESEL(std::string pesel) const
+std::string Database::findByPESEL(const std::string pesel) const
 {
+    std::string temp = "";
     auto iter = std::find_if(begin(people), end(people), [&pesel](const auto &student) {
         return student->getPESEL() == pesel;
     });
-
     if (iter != end(people))
     {        
-        std::cout << (*iter) ->getData();
+        temp += (*iter) ->getData() + "\n";
     }
+
+    return temp;
 }
+
+void Database::printIfFoundByLastName(const std::string lastName) const
+{
+    std::cout << findByLastName(lastName);
+}
+
+void Database::printIfFoundByPESEL(const std::string PESEL) const
+{
+    std::cout << findByPESEL(PESEL);
+}
+
 void Database::generateDatabase(int numberOfElements)
 {
-
     while (numberOfElements != 0)
     {
         if(numberOfElements > 0)
@@ -96,35 +111,41 @@ void Database::generateDatabase(int numberOfElements)
             people.emplace_back(new Student);
             numberOfElements--;
         }
-        
         if(numberOfElements > 0)
         {
             people.emplace_back(new Employee);
             numberOfElements--;
         }
-        
     }
 }
-
 
 void Database::saveDatabaseInFile()
 {
     std::ofstream file("data.txt");
     for (const auto &elem : people)
-        file << elem->getData() << "\n";
+        file << elem->getData() << std::endl;
+}
+
+void Database::loadDataFromFile() const
+{
+    std::ifstream file("data.txt");
+    std::string line;
+    while(std::getline(file, line))
+    {
+        std::cout << line;
+    }
 }
 
 bool Database::isPESELCorrect(std::string pesel) const
 {
-
     std::vector<int> ciphers;
     for (size_t i = 0; i < pesel.size(); ++i)
+    {
         ciphers.emplace_back(pesel[i] - '0');
-
+    }
     if (ciphers.size() != 11)
     {
-        std::cout << "Zla dlugosc peselu!" << std::endl;
-        return false;
+        throw PESELRangeError{"Wrong PESEL length"};
     }
 
     int cipher = 0;
@@ -135,35 +156,25 @@ bool Database::isPESELCorrect(std::string pesel) const
 
     if (cipher % 10 != ciphers[10])
     {
-        std::cout << "Bledny pesel!" << std::endl;
-        return false;
+        throw PESELRangeError{"Wrong PESEL"};
     }
     else
     {
-        std::cout << "Pesel poprawny" << std::endl;
         return true;
     }
 }
 
-
 void Database::modifyPersonByPESEL(std::string PESEL)
 {
-
     if (isPESELCorrect(PESEL) == true)
     {
         auto iter = std::find_if(begin(people), end(people), [&PESEL](const auto &student) {
             return student->getPESEL() == PESEL;
         });
-        
         if (iter != std::end(people))
         {
             (*iter)->setData();
         }
-    }
-
-    else
-    {
-        std::cout << "Bledny pesel!";
     }
 }
 
@@ -177,12 +188,12 @@ void Database::modifyEarningsByPesel(std::string PESEL, int earnings)
         
         if (iter != std::end(people))
         {
-            (*iter)->setEarnings(earnings);
+            (*iter)->setNumber(earnings);
         }
     }
+}
 
-    else
-    {
-        std::cout << "Bledny pesel!";
-    }   
+bool Database::isVectorEmpty() const
+{
+    return people.empty();
 }
