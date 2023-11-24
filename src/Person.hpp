@@ -5,28 +5,27 @@
 #include <random>
 #include <string>
 
-enum class Gender
-{
+enum class Gender {
     Male,
     Female,
     Count
 };
 
-class Person
-{
+class Person {
 protected:
     std::string name_;
     std::string lastName_;
     std::string PESEL_;
     std::string address_;
-    Gender gender_;         
+    Gender gender_;
+
 public:
     Person();
-    Person(const std::string &name,
-        const std::string &lastName,
-        const std::string &PESEL,
-        const std::string &address,
-        const Gender &gender);
+    Person(const std::string& name,
+           const std::string& lastName,
+           const std::string& PESEL,
+           const std::string& address,
+           const Gender& gender);
     virtual ~Person();
     virtual void setData() = 0;
     virtual std::string getData() const = 0;

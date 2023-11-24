@@ -5,25 +5,25 @@
 #include <iostream>
 #include <iterator>
 #include <memory>
-#include <string>
 #include <stdexcept>
+#include <string>
 #include <vector>
 
 #include "Employee.hpp"
 #include "Person.hpp"
 #include "Student.hpp"
 
-struct PESELRangeError : public std::range_error
-{
-    PESELRangeError(std::string const& msg) : std::range_error(msg){}
+struct PESELRangeError : public std::range_error {
+    PESELRangeError(std::string const& msg)
+        : std::range_error(msg) {}
 };
 
-class Database
-{
+class Database {
 private:
     std::vector<std::shared_ptr<Person>> people;
+
 public:
-    const std::vector<std::shared_ptr<Person>>& getPeople() const {return people;}
+    const std::vector<std::shared_ptr<Person>>& getPeople() const { return people; }
     std::string showContent() const;
     std::string findByLastName(const std::string lastName) const;
     std::string findByPESEL(const std::string PESEL) const;
