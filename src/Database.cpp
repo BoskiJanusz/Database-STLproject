@@ -23,7 +23,7 @@ std::string Database::showContent() const
 void Database::sortByIndex()
 {
     std::sort(begin(people), end(people), [](const auto &lhs, const auto &rhs) {
-        return lhs->getNumber() > rhs->getNumber();
+        return std::dynamic_pointer_cast<Student>(lhs)->getIndex() > std::dynamic_pointer_cast<Student>(rhs)->getIndex();
     });
 }
 
@@ -44,7 +44,7 @@ void Database::sortByLastName()
 void Database::removeStudentByIndex(const int index)
 {
     auto iter = std::find_if(begin(people), end(people), [&index](const auto &student) {
-        return student->getNumber() == index;
+        return std::dynamic_pointer_cast<Student>(student)->getIndex() == index;
     });
 
     if (iter != end(people))
@@ -182,13 +182,13 @@ void Database::modifyEarningsByPesel(std::string PESEL, int earnings)
 {
   if (isPESELCorrect(PESEL) == true)
     {
-        auto iter = std::find_if(begin(people), end(people), [&PESEL](const auto &student) {
-            return student->getPESEL() == PESEL;
+        auto iter = std::find_if(begin(people), end(people), [&PESEL](const auto &employer) {
+            return employer->getPESEL() == PESEL;
         });
         
         if (iter != std::end(people))
         {
-            (*iter)->setNumber(earnings);
+            std::dynamic_pointer_cast<Employee>((*iter))->setSalary(earnings);
         }
     }
 }

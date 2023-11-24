@@ -30,8 +30,6 @@ public:
     virtual ~Person();
     virtual void setData() = 0;
     virtual std::string getData() const = 0;
-    virtual void setNumber(const int) = 0;
-    virtual int getNumber() const = 0;
     std::string getPESEL() const;
     std::string getLastName() const;
     std::string generateRandomMaleName() const;

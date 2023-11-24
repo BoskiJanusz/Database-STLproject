@@ -1,14 +1,13 @@
 #pragma once
 #include "Person.hpp"
+#include "Interfaces.hpp"
 #include <string>
 #include <iostream>
 
-class Student : public Person
-{
+class Student : public Person,
+                public Indexable{
 private:
     int index_;
-    void setIndex(const int);
-    int getIndex() const;
 public:
     Student(const std::string &name,
             const std::string &lastName,
@@ -20,9 +19,9 @@ public:
     Student();
     ~Student();
     void setData() override;
-    void setNumber(const int) override;
+    void setIndex(const int&) override;
     void modifyStudentByIndex(const int);
     std::string getData() const override;
-    int getNumber() const override;
+    int getIndex() const override;
     int generateRandomIndex() const;
 };

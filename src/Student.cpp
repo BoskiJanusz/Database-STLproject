@@ -36,11 +36,6 @@ int Student::getIndex() const
     return index_;
 }
 
-int Student::getNumber() const
-{
-    return Student::getIndex();
-}
-
 std::string Student::getData() const
 {
     std::string data = "";
@@ -51,13 +46,9 @@ std::string Student::getData() const
     return data;
 }
 
-void Student::setIndex(int index)
+void Student::setIndex(const int& index)
 {
-    this->index_ = index;
-}
-void Student::setNumber(int index)
-{
-    Student::setIndex(index);
+    index_ = index;
 }
 
 void Student::setData() 

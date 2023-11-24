@@ -32,19 +32,9 @@ Employee::Employee()
 
 Employee::~Employee(){}
 
-void Employee::setEarnings(int earnings)
-{
-        this->earnings_ = earnings;
-}
-
-int Employee::getEarnings() const
+int Employee::getSalary() const
 {
         return earnings_;
-}
-
-int Employee::getNumber() const
-{
-        return Employee::getEarnings();
 }
 
 int Employee::generateRandomEarnings() const 
@@ -70,9 +60,9 @@ void Employee::setData()
         std::cin >> earnings_;
 }
 
-void Employee::setNumber(int number)
+void Employee::setSalary(const int& earnings)
 {
-        Employee::setEarnings(number);
+        earnings_ = earnings;
 }
 
 std::string Employee::getData() const

@@ -1,14 +1,14 @@
 #pragma once
 
 #include "Person.hpp"
+#include "Interfaces.hpp"
 #include <string>
 #include <iostream>
 
-class Employee : public   Person
-{
+class Employee : public Person,
+                 public Salaryable{
+private:
     int earnings_;
-    void setEarnings(int);
-    int getEarnings() const;
 public:
     Employee(const std::string &name,
                 const std::string &lastName,
@@ -20,8 +20,8 @@ public:
     Employee();
     ~Employee();
     void setData() override;
-    void setNumber(const int) override;
+    void setSalary(const int&) override;
     std::string getData() const override;
-    int getNumber() const override;
+    int getSalary() const override;
     int generateRandomEarnings() const;
 };

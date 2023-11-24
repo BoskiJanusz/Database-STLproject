@@ -113,12 +113,12 @@ TEST_F(DataBaseTest, SortStudentByIndex)
     db.add_to_base(std::make_shared<Student>("Andzelika", "Nowak", "76120851491", "Ul. Wroclawska", Gender::Female, 2345));
     db.add_to_base(std::make_shared<Student>("Andrzej", "Reto", "47061311463", "Ul. Michalowiska", Gender::Male, 5744));
     db.add_to_base(std::make_shared<Student>("Karol", "Bordo", "64102499632", "Ul. Wiesnowa", Gender::Male, 23456));
-    db.add_to_base(std::make_shared<Student>("Maja", "Niedziela", "72081255275", "Ul. Polska", Gender::MFemale, 254894));
+    db.add_to_base(std::make_shared<Student>("Maja", "Niedziela", "72081255275", "Ul. Polska", Gender::Female, 254894));
     db.sortByIndex();
     auto isSorted = std::is_sorted(std::begin(db.getPeople()), std::end(db.getPeople()), [](const auto &lhs, const auto &rhs){
-        return lhs->getNumber() > rhs->getNumber();  
+        return std::dynamic_pointer_cast<Student>(lhs)->getIndex() > std::dynamic_pointer_cast<Student>(rhs)->getIndex();  
     });
-    db.displayDatabase();
+    //db.displayDatabase();
     auto expected = true;
 
     EXPECT_EQ(isSorted, expected);
